@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Box } from 'grommet'
 import { Circle } from './circle'
 import { Button, Screen } from './components'
 
@@ -19,20 +20,29 @@ function App() {
 
     return (
         <Screen>
-            <img
-                src="/logo.png"
-                style={{ height: 90, width: 90, marginBottom: 15, objectFit: 'contain' }}
-            />
-            <p>{`Master wallet ID: ${masterWalletId}`}</p>
-            <p>{`Total balance (available): ${circle.formatBalance(
-                balance,
-                'available',
-            )}`}</p>
-            <p>{`Total balance (unsettled): ${circle.formatBalance(
-                balance,
-                'unsettled',
-            )}`}</p>
-            <Button>Test Button</Button>
+            <Box fill pad="medium" justify="center" align="center">
+                <img
+                    src="/logo.png"
+                    style={{
+                        height: 90,
+                        width: 90,
+                        marginBottom: 15,
+                        objectFit: 'contain',
+                    }}
+                    alt="Arcade City logo"
+                />
+
+                <p>{`Master wallet ID: ${masterWalletId}`}</p>
+                <p>{`Total balance (available): ${circle.formatBalance(
+                    balance,
+                    'available',
+                )}`}</p>
+                <p>{`Total balance (unsettled): ${circle.formatBalance(
+                    balance,
+                    'unsettled',
+                )}`}</p>
+                <Button>Test Button</Button>
+            </Box>
         </Screen>
     )
 }
