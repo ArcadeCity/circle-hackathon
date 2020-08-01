@@ -21,7 +21,7 @@ export class Circle {
 
     async fetchBalance() {
         const balance: any = await paymentsApi.getBalance()
-        console.log(balance)
+        // console.log(balance)
         return balance
     }
 
