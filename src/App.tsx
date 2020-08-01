@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Circle } from './circle'
+import { Screen } from './components'
 
 const circle = new Circle()
 
@@ -17,7 +18,7 @@ function App() {
     }, [])
 
     return (
-        <>
+        <Screen>
             <p>{`Master wallet ID: ${masterWalletId}`}</p>
             <p>{`Total balance (available): ${circle.formatBalance(
                 balance,
@@ -27,7 +28,7 @@ function App() {
                 balance,
                 'unsettled',
             )}`}</p>
-        </>
+        </Screen>
     )
 }
 
