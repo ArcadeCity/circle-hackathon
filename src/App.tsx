@@ -38,20 +38,48 @@ function App() {
                 <Button>Rider</Button>
                 <Button>Driver</Button>
 
-                {/* <div style={{ marginTop: 40 }}>
-                    <p>{`Master wallet ID: ${masterWalletId}`}</p>
-                    <p>{`Total balance (available): ${circle.formatBalance(
-                        balance,
-                        'available',
-                    )}`}</p>
-                    <p>{`Total balance (unsettled): ${circle.formatBalance(
-                        balance,
-                        'unsettled',
-                    )}`}</p>
-                </div> */}
+                <div style={{ position: 'absolute', top: 15, left: 15 }}>
+                    <Box
+                        pad="medium"
+                        round="medium"
+                        style={{ backgroundColor: 'rgba(0,0,0,0.5)', minWidth: 400 }}
+                    >
+                        <p style={{ ...infoText, fontWeight: 'bold' }}>
+                            Circle Demo for MoneyHacks 2020
+                        </p>
+                        <p style={infoText}>
+                            Code available on{' '}
+                            <a
+                                href="https://github.com/ArcadeCity/circle-hackathon"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#AE30FF' }}
+                            >
+                                GitHub
+                            </a>
+                        </p>
+                        <p style={infoText}>{`Master wallet ID: ${masterWalletId}`}</p>
+                        <p
+                            style={infoText}
+                        >{`Total balance (available): ${circle.formatBalance(
+                            balance,
+                            'available',
+                        )}`}</p>
+                        <p
+                            style={infoText}
+                        >{`Total balance (unsettled): ${circle.formatBalance(
+                            balance,
+                            'unsettled',
+                        )}`}</p>
+                    </Box>
+                </div>
             </Box>
         </Screen>
     )
 }
 
 export default App
+
+const infoText = {
+    margin: '5px 0',
+}
