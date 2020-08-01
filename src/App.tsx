@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Circle } from './circle'
-import { Screen } from './components'
+import { Button, Screen } from './components'
 
 const circle = new Circle()
 
@@ -28,6 +28,7 @@ function App() {
                 balance,
                 'unsettled',
             )}`}</p>
+            <Button>Test Button</Button>
         </Screen>
     )
 }
