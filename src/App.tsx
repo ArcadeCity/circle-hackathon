@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box } from 'grommet'
 import { Circle } from './circle'
-import { Button, Screen } from './components'
+import { Button, Screen, Text } from './components'
 
 const circle = new Circle()
 
@@ -32,16 +32,23 @@ function App() {
                     alt="Arcade City logo"
                 />
 
-                <p>{`Master wallet ID: ${masterWalletId}`}</p>
-                <p>{`Total balance (available): ${circle.formatBalance(
-                    balance,
-                    'available',
-                )}`}</p>
-                <p>{`Total balance (unsettled): ${circle.formatBalance(
-                    balance,
-                    'unsettled',
-                )}`}</p>
-                <Button>Test Button</Button>
+                <Text preset="title">Join Arcade City</Text>
+                <Text preset="descriptionSlim">Are you a rider or driver?</Text>
+                <div style={{ marginTop: 8 }} />
+                <Button>Rider</Button>
+                <Button>Driver</Button>
+
+                {/* <div style={{ marginTop: 40 }}>
+                    <p>{`Master wallet ID: ${masterWalletId}`}</p>
+                    <p>{`Total balance (available): ${circle.formatBalance(
+                        balance,
+                        'available',
+                    )}`}</p>
+                    <p>{`Total balance (unsettled): ${circle.formatBalance(
+                        balance,
+                        'unsettled',
+                    )}`}</p>
+                </div> */}
             </Box>
         </Screen>
     )

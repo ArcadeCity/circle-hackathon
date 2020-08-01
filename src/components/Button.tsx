@@ -5,8 +5,9 @@ export const Button = styled('button')<any>`
     color: white;
     border-radius: 3px;
     border: 2px solid #5b20f2;
-    margin: 0.5em 1em;
+    margin: 0.75em 1em;
     padding: 1em 2em;
+    min-width: 200px;
     font-weight: bold;
     &:active {
         opacity: 0.7;
