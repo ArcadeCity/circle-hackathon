@@ -19,4 +19,7 @@ export const styles: any = {
         textAlign: 'center',
         fontSize: 18,
     },
+    container: {
+        marginTop: -30,
+    },
 }
