@@ -10,7 +10,13 @@ export const Text = styled('p')<any>`
             font-weight: bold;
             margin: 6px 0;
         `}
-
+        ${(props) =>
+            props.preset === 'description' &&
+            css`
+                color: #9d98cb;
+                margin: 14px 0 22px;
+            `}
+        
     ${(props) =>
         props.preset === 'descriptionSlim' &&
         css`

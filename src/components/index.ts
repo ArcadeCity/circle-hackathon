@@ -1,3 +1,5 @@
 export * from './Button'
+export * from './Infobox'
 export * from './Screen'
+export * from './styles'
 export * from './Text'
