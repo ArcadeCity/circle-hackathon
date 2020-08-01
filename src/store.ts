@@ -5,10 +5,13 @@ export const [useStore] = create((set) => ({
     pane: 'intro',
     actions: {
         setRider() {
-            set({ class: 'rider' })
+            set({ class: 'rider', pane: 'rider' })
         },
         setDriver() {
-            set({ class: 'driver' })
+            set({ class: 'driver', pane: 'driver' })
+        },
+        setPane(pane: string) {
+            set({ pane })
         },
     },
 }))
