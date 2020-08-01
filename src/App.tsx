@@ -19,6 +19,10 @@ function App() {
 
     return (
         <Screen>
+            <img
+                src="/logo.png"
+                style={{ height: 90, width: 90, marginBottom: 15, objectFit: 'contain' }}
+            />
             <p>{`Master wallet ID: ${masterWalletId}`}</p>
             <p>{`Total balance (available): ${circle.formatBalance(
                 balance,
