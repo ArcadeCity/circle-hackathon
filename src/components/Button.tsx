@@ -20,4 +20,10 @@ export const Button = styled('button')<any>`
             background: #eeecfb;
             shadow-color: 'rgba(120, 101, 182, 0.12)';
         `}
+
+    ${(props) =>
+        props.disabled &&
+        css`
+            opacity: 0.5;
+        `}
 `

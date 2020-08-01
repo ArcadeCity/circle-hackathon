@@ -1,5 +1,5 @@
 import cardsApi, { CreateCardPayload } from './lib/cardsApi'
-import paymentsApi from './lib/paymentsApi'
+import paymentsApi, { CreatePaymentPayload } from './lib/paymentsApi'
 import walletsApi from './lib/walletsApi'
 import openpgp from './lib/openpgp'
 import { v4 as uuidv4 } from 'uuid'
@@ -14,6 +14,49 @@ export class Circle {
             'QVBJX0tFWTo2YjZmM2E5MTE2NGM3ZDgwNzgzMzA2YmUxNzJiOTlkNjozYjIzZmNjNzM4ZmQ3YzU5NDZmN2QzM2RhNGUyZmM0Zg=='
         this.sessionId = uuidv4()
         this.configureAxios()
+    }
+
+    async demoPayDriver(cardSourceId: string) {
+        console.log('[Circle svc] Demo paying driver')
+
+        const cardNumber: string = '4007400000000007'
+        const cvv: string = '123'
+
+        const cardDetails: {
+            number: string
+            cvv?: string
+        } = {
+            number: cardNumber.trim().replace(/\D/g, ''),
+            cvv,
+        }
+
+        const publicKey: any = await cardsApi.getPCIPublicKey()
+        const encryptedData = await openpgp.encrypt(cardDetails, publicKey)
+        const { encryptedMessage, keyId } = encryptedData
+
+        // Create payment from rider - success
+        const createPaymentPayload: CreatePaymentPayload = {
+            idempotencyKey: uuidv4(),
+            amount: {
+                amount: '20.00',
+                currency: 'USD',
+            },
+            source: { id: cardSourceId, type: 'card' },
+            verification: 'cvv',
+            metadata: {
+                email: 'chris+testo@arcade.city',
+                sessionId: this.sessionId,
+                ipAddress: '1.2.3.4',
+                phoneNumber: '+15125551235',
+            },
+            encryptedData: encryptedMessage,
+            keyId,
+        }
+
+        const riderPayment = await paymentsApi.createPayment(createPaymentPayload)
+        console.log('riderPayment', riderPayment)
+
+        return true
     }
 
     async addDemoCard() {

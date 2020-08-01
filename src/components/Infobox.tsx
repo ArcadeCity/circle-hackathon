@@ -9,7 +9,6 @@ const circle = new Circle()
 
 export function Infobox() {
     const card = useStore((state: State) => state.card)
-    console.log(card)
 
     const [masterWalletId, setMasterWalletId] = useState('')
     const [balance, setBalance] = useState()
@@ -61,7 +60,11 @@ export function Infobox() {
                 <p style={styles.info}>
                     Demo card connected?:{' '}
                     <span style={styles.highlight}>
-                        {card ? `Yes - Last4: ${card.last4}` : 'No'}
+                        {card && card === 'connecting'
+                            ? 'Connecting...'
+                            : card && card.last4
+                            ? `Yes - Last4: ${card.last4}`
+                            : 'No'}
                     </span>
                 </p>
             </Box>
