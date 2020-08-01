@@ -1,14 +1,64 @@
+import cardsApi, { CreateCardPayload } from './lib/cardsApi'
 import paymentsApi from './lib/paymentsApi'
 import walletsApi from './lib/walletsApi'
+import openpgp from './lib/openpgp'
+import { v4 as uuidv4 } from 'uuid'
 
 // Our Circle service
 export class Circle {
     apiKey: string
+    sessionId: string
 
     constructor() {
         this.apiKey =
             'QVBJX0tFWTo2YjZmM2E5MTE2NGM3ZDgwNzgzMzA2YmUxNzJiOTlkNjozYjIzZmNjNzM4ZmQ3YzU5NDZmN2QzM2RhNGUyZmM0Zg=='
+        this.sessionId = uuidv4()
         this.configureAxios()
+    }
+
+    async addDemoCard() {
+        console.log('[Circle svc] Adding demo card')
+        // Set up the card
+        const cardNumber: string = '4007400000000007'
+        const cvv: string = '123'
+
+        const cardDetails: {
+            number: string
+            cvv?: string
+        } = {
+            number: cardNumber.trim().replace(/\D/g, ''),
+            cvv,
+        }
+
+        const publicKey: any = await cardsApi.getPCIPublicKey()
+        const encryptedData = await openpgp.encrypt(cardDetails, publicKey)
+        const { encryptedMessage, keyId } = encryptedData
+
+        const cardPayload: CreateCardPayload = {
+            idempotencyKey: uuidv4(),
+            keyId,
+            encryptedData: encryptedMessage,
+            expMonth: 12,
+            expYear: 2024,
+            billingDetails: {
+                name: 'Jimso Bimso',
+                city: 'Austin',
+                district: 'TX',
+                country: 'US',
+                line1: '123 Hello St',
+                line2: 'Apt 1',
+                postalCode: '71234',
+            },
+            metadata: {
+                sessionId: this.sessionId,
+                ipAddress: '1.2.3.4',
+                email: 'fake+email@testo.com',
+                phoneNumber: '+15125551235',
+            },
+        }
+
+        const card = await cardsApi.createCard(cardPayload)
+        return card
     }
 
     async fetchMasterWalletId() {
@@ -44,8 +94,10 @@ export class Circle {
             }
             return config
         }
+        const cardsInstance = cardsApi.getInstance()
         const paymentsInstance = paymentsApi.getInstance()
         const walletsInstance = walletsApi.getInstance()
+        cardsInstance.interceptors.request.use(circleAuthInterceptor)
         paymentsInstance.interceptors.request.use(circleAuthInterceptor)
         walletsInstance.interceptors.request.use(circleAuthInterceptor)
     }

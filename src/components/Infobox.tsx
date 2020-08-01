@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Box } from 'grommet'
 import { Circle } from '../circle'
 import { styles } from './styles'
+import { useStore } from '../store'
+import { State } from 'zustand'
 
 const circle = new Circle()
 
 export function Infobox() {
+    const card = useStore((state: State) => state.card)
+    console.log(card)
+
     const [masterWalletId, setMasterWalletId] = useState('')
     const [balance, setBalance] = useState()
 
@@ -51,6 +56,12 @@ export function Infobox() {
                     Total balance (unsettled):{' '}
                     <span style={styles.highlight}>
                         {circle.formatBalance(balance, 'unsettled')}
+                    </span>
+                </p>
+                <p style={styles.info}>
+                    Demo card connected?:{' '}
+                    <span style={styles.highlight}>
+                        {card ? `Yes - Last4: ${card.last4}` : 'No'}
                     </span>
                 </p>
             </Box>
