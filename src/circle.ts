@@ -44,7 +44,7 @@ export class Circle {
             source: { id: cardSourceId, type: 'card' },
             verification: 'cvv',
             metadata: {
-                email: 'chris+testo@arcade.city',
+                email: 'fake+email@arcade.city',
                 sessionId: this.sessionId,
                 ipAddress: '1.2.3.4',
                 phoneNumber: '+15125551235',
@@ -56,7 +56,7 @@ export class Circle {
         const riderPayment = await paymentsApi.createPayment(createPaymentPayload)
         console.log('riderPayment', riderPayment)
 
-        return true
+        return riderPayment
     }
 
     async addDemoCard() {

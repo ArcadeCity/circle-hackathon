@@ -9,6 +9,7 @@ const circle = new Circle()
 
 export function Infobox() {
     const card = useStore((state: State) => state.card)
+    const payment = useStore((state: State) => state.payment)
 
     const [masterWalletId, setMasterWalletId] = useState('')
     const [balance, setBalance] = useState()
@@ -64,6 +65,16 @@ export function Infobox() {
                             ? 'Connecting...'
                             : card && card.last4
                             ? `Yes - Last4: ${card.last4}`
+                            : 'No'}
+                    </span>
+                </p>
+                <p style={styles.info}>
+                    Demo driver payment?:{' '}
+                    <span style={styles.highlight}>
+                        {payment && payment === 'paying'
+                            ? 'Paying...'
+                            : payment && payment.status
+                            ? `Yes - ${payment.status}`
                             : 'No'}
                     </span>
                 </p>
