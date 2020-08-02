@@ -30,7 +30,7 @@ export function Infobox() {
                     style={{ backgroundColor: 'rgba(0,0,0,0.5)', minWidth: 350 }}
                 >
                     <p style={styles.circleTitle}>Circle Demo &mdash; MoneyHacks 2020</p>
-                    <p style={{ ...styles.info, marginBottom: 20, textAlign: 'center' }}>
+                    <p style={{ ...styles.info, marginBottom: 6, textAlign: 'center' }}>
                         Code available on{' '}
                         <a
                             href="https://github.com/ArcadeCity/circle-hackathon"
@@ -39,6 +39,17 @@ export function Infobox() {
                             style={styles.link}
                         >
                             GitHub
+                        </a>
+                    </p>
+                    <p style={{ ...styles.info, marginBottom: 20, textAlign: 'center' }}>
+                        Ideas? Want to help?{' '}
+                        <a
+                            href="mailto:cityhall@arcade.city"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={styles.link}
+                        >
+                            Email us
                         </a>
                     </p>
                     <p style={styles.info}>
