@@ -69,6 +69,14 @@ export const [useStore] = create((set, get) => ({
                 )
                 return false
             }
+
+            // Create guild wallet
+            const guildWallet = await get().circle.createWallet(
+                `${guildname} Guild Wallet [[${dues}]]`,
+            )
+            const { walletId }: any = guildWallet
+
+            console.log(`Created guild wallet with ID ${walletId}:`, guildWallet)
         },
     },
 }))

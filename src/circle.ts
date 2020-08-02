@@ -16,6 +16,11 @@ export class Circle {
         this.configureAxios()
     }
 
+    async createWallet(name: string) {
+        const wallet = await walletsApi.createWallet(uuidv4(), name)
+        return wallet
+    }
+
     async demoPayDriver(cardSourceId: string) {
         console.log('[Circle svc] Demo paying driver')
 
