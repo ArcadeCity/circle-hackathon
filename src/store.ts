@@ -40,12 +40,23 @@ export const [useStore] = create((set, get) => ({
         async demoTransferDriver() {
             console.log('demoTransferDriver')
             const driverWallet = await get().circle.createWallet()
-            console.log('driverWallet:', driverWallet)
-            const transfer = await get().circle.demoTransferDriver(driverWallet.walletId)
+            const guildWallet = get().actions.getRandomGuildWallet()
+            console.log('New driverWallet:', driverWallet)
+            console.log('Random guildWallet:', guildWallet)
+            const transfer = await get().circle.demoTransferDriver(
+                driverWallet.walletId,
+                guildWallet.walletId,
+            )
             console.log('transfer:', transfer)
             setTimeout(() => {
                 get().actions.fetchInitialData()
             }, 1000)
+        },
+        getRandomGuildWallet() {
+            const guilds = get().guilds
+            console.log(guilds)
+            const guild = guilds[(guilds.length * Math.random()) | 0]
+            return guild
         },
         setRider() {
             set({ class: 'rider', pane: 'rider' })
@@ -65,12 +76,12 @@ export const [useStore] = create((set, get) => ({
             if (walletId === get().masterWalletId) {
                 return 'Main Wallet'
             } else {
-                console.log(get().guilds)
+                // console.log(get().guilds)
                 const guilds = get().guilds.filter(
                     (guild: any) => guild.walletId === walletId,
                 )
                 if (guilds.length === 1) {
-                    console.log('found guild', guilds[0])
+                    // console.log('found guild', guilds[0])
                     return guilds[0].description
                 } else if (guilds.length === 0) {
                     return 'Demo Driver Wallet'

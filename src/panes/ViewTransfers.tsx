@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, styles, Text } from '../components'
 import { useStore } from '../store'
 import { State } from 'zustand'
+import moment from 'moment'
 
 export const ViewTransfers = () => {
     const { demoTransferDriver, formatWalletId, setPane } = useStore(
@@ -22,7 +23,8 @@ export const ViewTransfers = () => {
                             ${transfer.amount.amount} {transfer.amount.currency}
                         </span>{' '}
                         from {formatWalletId(transfer.source.id)} to{' '}
-                        {formatWalletId(transfer.destination.id)} - {transfer.status}
+                        {formatWalletId(transfer.destination.id)} - {transfer.status} -{' '}
+                        {moment(transfer.createDate).fromNow()}
                     </p>
                 )
             })}
@@ -41,7 +43,8 @@ export const ViewTransfers = () => {
                     <span role="img" aria-label="Up arrow">
                         ⬆️
                     </span>
-                    Here we'll send 80% to the driver and 10% to their guild.
+                    Here we'll send 80% to the driver and 10% to their guild (for now
+                    chosen at random).
                 </Text>
                 <Button onClick={() => setPane('intro')}>Example dues transfer</Button>
                 <Text preset="description">
@@ -49,6 +52,7 @@ export const ViewTransfers = () => {
                         ⬆️
                     </span>
                     We'll pick a random guild and send them 90% of their dues amount.
+                    (Assuming our main wallet has sufficient balance!)
                 </Text>
                 <Button secondary onClick={() => setPane('intro')}>
                     Back to the beginning

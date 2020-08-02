@@ -38,8 +38,7 @@ export function Infobox() {
                     </a>
                 </p>
                 <p style={styles.info}>
-                    Master wallet ID:{' '}
-                    <span style={styles.highlight}>{masterWalletId}</span>
+                    Main wallet ID: <span style={styles.highlight}>{masterWalletId}</span>
                 </p>
                 <p style={styles.info}>
                     Total balance (available):{' '}

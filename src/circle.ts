@@ -19,7 +19,7 @@ export class Circle {
         this.configureAxios()
     }
 
-    async demoTransferDriver() {
+    async demoTransferDriver(driverWalletId: string, guildWalletId: string) {
         // Usually we'd get these from the payment; for now can hardcode
         const paymentAmount = '20.00'
         const feeAmount = '1.15'
@@ -50,15 +50,15 @@ export class Circle {
             },
             destination: {
                 type: 'wallet',
-                id: '1000025375',
+                id: guildWalletId,
             },
             amount: {
                 amount: sendToGuild.toString(),
                 currency: 'USD',
             },
         }
-        // const guildTransfer = await transfersApi.createTransfer(guildTransferPayload)
-        // console.log('guildTransfer:', guildTransfer)
+        const guildTransfer = await transfersApi.createTransfer(guildTransferPayload)
+        console.log('guildTransfer:', guildTransfer)
 
         // Transfer to driver
         const driverTransferPayload: CreateTransferPayload = {
@@ -69,7 +69,7 @@ export class Circle {
             },
             destination: {
                 type: 'wallet',
-                id: '1000025371',
+                id: driverWalletId,
             },
             amount: {
                 amount: sendToDriver.toString(),
@@ -81,6 +81,7 @@ export class Circle {
         console.log('driverTransfer:', driverTransfer)
         return {
             driverTransfer,
+            guildTransfer,
         }
     }
 
@@ -115,7 +116,7 @@ export class Circle {
                 // console.log('skipping ', wallet)
             }
         })
-        console.log('guilds:', guilds)
+        // console.log('guilds:', guilds)
         return {
             balance,
             masterWalletId,

@@ -17,11 +17,22 @@ export const ViewGuilds = () => {
                         <span style={styles.bold}>{guild.name}</span> -{' '}
                         <span
                             style={styles.link}
-                            onClick={() => alert('Thanks for your interest!')}
+                            onClick={() =>
+                                alert(
+                                    'Thanks for your interest! For now you can make demo dues payments on the View Transfers screen.',
+                                )
+                            }
                         >{`Join for $${guild.dues}/mo`}</span>
                     </p>
                 )
             })}
+            <Button
+                primary
+                onClick={() => setPane('viewTransfers')}
+                style={{ marginTop: 25 }}
+            >
+                View Transfers
+            </Button>
             <Button secondary onClick={() => setPane('intro')} style={{ marginTop: 25 }}>
                 Back
             </Button>
