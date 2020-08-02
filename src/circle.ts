@@ -114,13 +114,21 @@ export class Circle {
         }
     }
 
+    async fetchMasterWallet() {
+        const wallet = walletsApi.getWalletById(this.masterWalletId)
+        return wallet
+    }
+
     async fetchInitialData() {
         const balance = await this.fetchBalance()
         const guilds: any[] = []
         const masterWalletId = await this.fetchMasterWalletId()
+        this.masterWalletId = masterWalletId
         const transfers = await this.fetchTransfers()
         const wallets: any = await this.fetchWallets()
-        this.masterWalletId = masterWalletId
+        const masterWallet: any = await this.fetchMasterWallet()
+
+        console.log('Main wallet:', masterWallet)
 
         // Filter out my earliest test wallets
         const filteredWallets = wallets.filter(
@@ -145,9 +153,9 @@ export class Circle {
                 // console.log('skipping ', wallet)
             }
         })
-        // console.log('guilds:', guilds)
         return {
             balance,
+            masterWallet,
             masterWalletId,
             guilds,
             transfers,
@@ -159,7 +167,7 @@ export class Circle {
         // Filter out my earliest test transfers
         const filteredTransfers = transfers.filter(
             (transfer: any) =>
-                Date.parse(transfer.createDate) > Date.parse('2020-08-01T00:00:00.398Z'),
+                Date.parse(transfer.createDate) > Date.parse('2020-08-02T17:39:22.398Z'),
         )
 
         return filteredTransfers
@@ -282,6 +290,14 @@ export class Circle {
     formatBalance(balance: any, type: string) {
         if (!balance) {
             return '---'
+        } else if (
+            type === 'main' &&
+            balance &&
+            balance.balances &&
+            balance.balances[0]
+            // lol
+        ) {
+            return `${balance.balances[0].amount} ${balance.balances[0].currency}`
         } else if (type === 'available' && balance.available && balance.available[0]) {
             return `${balance.available[0].amount} ${balance.available[0].currency}`
         } else if (type === 'unsettled' && balance.unsettled && balance.unsettled[0]) {

@@ -9,6 +9,7 @@ export function Infobox() {
     const card = useStore((state: State) => state.card)
     const guild = useStore((state: State) => state.guild)
     const guilds = useStore((state: State) => state.guilds)
+    const masterWallet = useStore((state: State) => state.masterWallet)
     const masterWalletId = useStore((state: State) => state.masterWalletId)
     const payment = useStore((state: State) => state.payment)
     const transfers = useStore((state: State) => state.transfers)
@@ -39,6 +40,12 @@ export function Infobox() {
                 </p>
                 <p style={styles.info}>
                     Main wallet ID: <span style={styles.highlight}>{masterWalletId}</span>
+                </p>
+                <p style={styles.info}>
+                    Main wallet balance:{' '}
+                    <span style={styles.highlight}>
+                        {formatBalance(masterWallet, 'main')}
+                    </span>
                 </p>
                 <p style={styles.info}>
                     Total balance (available):{' '}

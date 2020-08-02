@@ -9,7 +9,8 @@ export const [useStore] = create((set, get) => ({
     card: null,
     guild: null,
     guilds: [],
-    masterWalletId: null,
+    masterWallet: null, // { balances: [{ amount: 0, currency: 'USD' }] },
+    masterWalletId: null, // TODO: consolidate this w masterWallet
     payment: null,
     transfers: [],
     actions: {
@@ -18,10 +19,11 @@ export const [useStore] = create((set, get) => ({
             const {
                 balance,
                 guilds,
+                masterWallet,
                 masterWalletId,
                 transfers,
             } = await get().circle.fetchInitialData()
-            set({ balance, guilds, masterWalletId, transfers })
+            set({ balance, guilds, masterWallet, masterWalletId, transfers })
         },
         async demoTransferDues() {
             const guildWallet = get().actions.getRandomGuildWallet()
