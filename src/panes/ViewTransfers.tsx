@@ -5,7 +5,7 @@ import { State } from 'zustand'
 import moment from 'moment'
 
 export const ViewTransfers = () => {
-    const { demoTransferDriver, formatWalletId, setPane } = useStore(
+    const { demoTransferDriver, demoTransferDues, formatWalletId, setPane } = useStore(
         (state: State) => state.actions,
     )
     const transfers = useStore((state: State) => state.transfers)
@@ -46,13 +46,13 @@ export const ViewTransfers = () => {
                     Here we'll send 80% to the driver and 10% to their guild (for now
                     chosen at random).
                 </Text>
-                <Button onClick={() => setPane('intro')}>Example dues transfer</Button>
+                <Button onClick={demoTransferDues}>Example dues transfer</Button>
                 <Text preset="description">
                     <span role="img" aria-label="Up arrow">
                         ⬆️
                     </span>
-                    We'll pick a random guild and send them 90% of their dues amount.
-                    (Assuming our main wallet has sufficient balance!)
+                    We'll pick a random guild and send them 90% of their dues amount,
+                    assuming we have enough in the main balance.
                 </Text>
                 <Button secondary onClick={() => setPane('intro')}>
                     Back to the beginning

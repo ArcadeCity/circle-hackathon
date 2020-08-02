@@ -23,6 +23,15 @@ export const [useStore] = create((set, get) => ({
             } = await get().circle.fetchInitialData()
             set({ balance, guilds, masterWalletId, transfers })
         },
+        async demoTransferDues() {
+            const guildWallet = get().actions.getRandomGuildWallet()
+            console.log('Random guildWallet:', guildWallet)
+            const transfer = await get().circle.demoTransferDues(guildWallet)
+            console.log('transfer:', transfer)
+            setTimeout(() => {
+                get().actions.fetchInitialData()
+            }, 1000)
+        },
         async addDemoCard() {
             set({ card: 'connecting' })
             const card = await get().circle.addDemoCard()
@@ -38,7 +47,6 @@ export const [useStore] = create((set, get) => ({
             }, 1000)
         },
         async demoTransferDriver() {
-            console.log('demoTransferDriver')
             const driverWallet = await get().circle.createWallet()
             const guildWallet = get().actions.getRandomGuildWallet()
             console.log('New driverWallet:', driverWallet)

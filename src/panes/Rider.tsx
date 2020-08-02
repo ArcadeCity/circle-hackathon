@@ -27,7 +27,7 @@ export const Rider = () => {
                     You should see the updated (unsettled) balance in the info box.
                 </Text>
                 <Text preset="description">
-                    Now you can go back and use this same card to join a driver guild.
+                    Now try going back and creating a driver guild!
                 </Text>
                 <Button secondary onClick={() => setPane('intro')}>
                     Back to beginning

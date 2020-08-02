@@ -19,6 +19,35 @@ export class Circle {
         this.configureAxios()
     }
 
+    async demoTransferDues(guildWallet: any) {
+        const { description, dues, walletId }: any = guildWallet
+        console.log('Dues payment of ' + dues + ' to ' + description)
+
+        // Send 90% to the guild. [Note we are ignoring Circle's fee for now]
+        const sendToGuild = Math.floor(dues * 0.9 * 100) / 100
+        console.log('sendToGuild: $', sendToGuild)
+
+        // Transfer to guild
+        const guildTransferPayload: CreateTransferPayload = {
+            idempotencyKey: uuidv4(),
+            source: {
+                type: 'wallet',
+                id: this.masterWalletId,
+            },
+            destination: {
+                type: 'wallet',
+                id: walletId,
+            },
+            amount: {
+                amount: sendToGuild.toString(),
+                currency: 'USD',
+            },
+        }
+        const guildTransfer = await transfersApi.createTransfer(guildTransferPayload)
+        console.log('guildTransfer:', guildTransfer)
+        return guildTransfer
+    }
+
     async demoTransferDriver(driverWalletId: string, guildWalletId: string) {
         // Usually we'd get these from the payment; for now can hardcode
         const paymentAmount = '20.00'
@@ -147,7 +176,7 @@ export class Circle {
     }
 
     async demoPayDriver(cardSourceId: string) {
-        console.log('[Circle svc] Demo paying driver')
+        console.log('Demo paying driver')
 
         const cardNumber: string = '4007400000000007'
         const cvv: string = '123'
@@ -191,7 +220,7 @@ export class Circle {
     }
 
     async addDemoCard() {
-        console.log('[Circle svc] Adding demo card')
+        console.log('Adding demo card')
         // Set up the card
         const cardNumber: string = '4007400000000007'
         const cvv: string = '123'
@@ -232,6 +261,7 @@ export class Circle {
         }
 
         const card = await cardsApi.createCard(cardPayload)
+        console.log('Demo card added')
         return card
     }
 
