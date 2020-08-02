@@ -13,6 +13,7 @@ export const [useStore] = create((set, get) => ({
     payment: null,
     actions: {
         async fetchInitialData() {
+            console.log('Fetching API data...')
             const {
                 balance,
                 guilds,
@@ -30,6 +31,9 @@ export const [useStore] = create((set, get) => ({
             const cardSourceId = get().card.id
             const payment = await get().circle.demoPayDriver(cardSourceId)
             set({ payment })
+            setTimeout(() => {
+                get().actions.fetchInitialData()
+            }, 1000)
         },
         setRider() {
             set({ class: 'rider', pane: 'rider' })
@@ -91,7 +95,6 @@ export const [useStore] = create((set, get) => ({
             })
 
             setTimeout(() => {
-                console.log('Refreshing data...')
                 get().actions.fetchInitialData()
             }, 1000)
             console.log(`Created guild wallet with ID ${walletId}:`, wallet)

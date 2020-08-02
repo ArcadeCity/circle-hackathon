@@ -24,11 +24,10 @@ export const Rider = () => {
                 <Text preset="title">Success!</Text>
                 <Text preset="descriptionSlim">{`Payment ID: ${payment.id}`}</Text>
                 <Text preset="descriptionSlim">
-                    Refresh the page to see the updated (unsettled) balance.
+                    You should see the updated (unsettled) balance in the info box.
                 </Text>
                 <Text preset="description">
-                    Or go back to the beginning and use this same card to join a driver
-                    guild.
+                    Now you can go back and use this same card to join a driver guild.
                 </Text>
                 <Button secondary onClick={() => setPane('intro')}>
                     Back to beginning
