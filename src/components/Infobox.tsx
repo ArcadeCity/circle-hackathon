@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box } from 'grommet'
-import { Circle } from '../circle'
 import { styles } from './styles'
 import { useStore } from '../store'
 import { State } from 'zustand'
 
-const circle = new Circle()
-
 export function Infobox() {
     const card = useStore((state: State) => state.card)
     const payment = useStore((state: State) => state.payment)
-
-    const [masterWalletId, setMasterWalletId] = useState('')
-    const [balance, setBalance] = useState()
-
-    const fetchInitialData = async () => {
-        setMasterWalletId(await circle.fetchMasterWalletId())
-        setBalance(await circle.fetchBalance())
-    }
+    const { fetchInitialData, formatBalance } = useStore((state: State) => state.actions)
+    const balance = useStore((state: State) => state.balance)
+    const masterWalletId = useStore((state: State) => state.masterWalletId)
 
     useEffect(() => {
         fetchInitialData()
-    }, [])
+    }, [fetchInitialData])
 
     return (
         <div style={{ position: 'absolute', top: 15, right: 15 }}>
@@ -49,13 +41,13 @@ export function Infobox() {
                 <p style={styles.info}>
                     Total balance (available):{' '}
                     <span style={styles.highlight}>
-                        {circle.formatBalance(balance, 'available')}
+                        {formatBalance(balance, 'available')}
                     </span>
                 </p>
                 <p style={styles.info}>
                     Total balance (unsettled):{' '}
                     <span style={styles.highlight}>
-                        {circle.formatBalance(balance, 'unsettled')}
+                        {formatBalance(balance, 'unsettled')}
                     </span>
                 </p>
                 <p style={styles.info}>

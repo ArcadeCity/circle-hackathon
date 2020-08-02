@@ -104,6 +104,15 @@ export class Circle {
         return card
     }
 
+    async fetchInitialData() {
+        const balance = await this.fetchBalance()
+        const masterWalletId = await this.fetchMasterWalletId()
+        return {
+            balance,
+            masterWalletId,
+        }
+    }
+
     async fetchMasterWalletId() {
         // Grab the master wallet ID
         const {
