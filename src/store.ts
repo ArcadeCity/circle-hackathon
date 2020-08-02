@@ -6,8 +6,9 @@ export const [useStore] = create((set, get) => ({
     class: '',
     pane: 'intro',
     balance: null,
-    masterWalletId: null,
     card: null,
+    guild: null,
+    masterWalletId: null,
     payment: null,
     actions: {
         async fetchInitialData() {
@@ -40,6 +41,7 @@ export const [useStore] = create((set, get) => ({
             return get().circle.formatBalance(balance, type)
         },
         async submitCreateGuild(values: any) {
+            set({ guild: 'creating' })
             console.log('submitCreateGuild with:', values)
             let dues, guildname
             try {
@@ -71,12 +73,20 @@ export const [useStore] = create((set, get) => ({
             }
 
             // Create guild wallet
-            const guildWallet = await get().circle.createWallet(
+            const wallet = await get().circle.createWallet(
                 `${guildname} Guild Wallet [[${dues}]]`,
             )
-            const { walletId }: any = guildWallet
+            const { walletId }: any = wallet
+            set({
+                guild: {
+                    wallet,
+                    name: guildname,
+                    dues,
+                },
+                pane: 'guildCreated',
+            })
 
-            console.log(`Created guild wallet with ID ${walletId}:`, guildWallet)
+            console.log(`Created guild wallet with ID ${walletId}:`, wallet)
         },
     },
 }))

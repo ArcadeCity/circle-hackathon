@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from 'grommet'
 import { Infobox, Screen, styles } from './components'
-import { CreateGuild, Driver, Intro, JoinGuild, Rider } from './panes'
+import { CreateGuild, Driver, GuildCreated, Intro, JoinGuild, Rider } from './panes'
 import { useStore } from './store'
 import { State } from 'zustand'
 
@@ -22,6 +22,7 @@ function App() {
                 {pane === 'driver' && <Driver />}
                 {pane === 'joinGuild' && <JoinGuild />}
                 {pane === 'createGuild' && <CreateGuild />}
+                {pane === 'guildCreated' && <GuildCreated />}
             </Box>
         </Screen>
     )

@@ -5,11 +5,12 @@ import { useStore } from '../store'
 import { State } from 'zustand'
 
 export function Infobox() {
+    const balance = useStore((state: State) => state.balance)
     const card = useStore((state: State) => state.card)
+    const guild = useStore((state: State) => state.guild)
+    const masterWalletId = useStore((state: State) => state.masterWalletId)
     const payment = useStore((state: State) => state.payment)
     const { fetchInitialData, formatBalance } = useStore((state: State) => state.actions)
-    const balance = useStore((state: State) => state.balance)
-    const masterWalletId = useStore((state: State) => state.masterWalletId)
 
     useEffect(() => {
         fetchInitialData()
@@ -67,6 +68,16 @@ export function Infobox() {
                             ? 'Paying...'
                             : payment && payment.status
                             ? `Yes - ${payment.status}`
+                            : 'No'}
+                    </span>
+                </p>
+                <p style={styles.info}>
+                    Guild created?:{' '}
+                    <span style={styles.highlight}>
+                        {guild && guild === 'creating'
+                            ? 'Creating...'
+                            : guild && guild.name
+                            ? `Yes - ${guild.name} ($${guild.dues}/mo)`
                             : 'No'}
                     </span>
                 </p>
