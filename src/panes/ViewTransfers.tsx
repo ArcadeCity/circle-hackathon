@@ -4,7 +4,9 @@ import { useStore } from '../store'
 import { State } from 'zustand'
 
 export const ViewTransfers = () => {
-    const { formatWalletId, setPane } = useStore((state: State) => state.actions)
+    const { demoTransferDriver, formatWalletId, setPane } = useStore(
+        (state: State) => state.actions,
+    )
     const transfers = useStore((state: State) => state.transfers)
     return (
         <>
@@ -25,7 +27,7 @@ export const ViewTransfers = () => {
                 )
             })}
 
-            <div style={{ width: 400, textAlign: 'center' }}>
+            <div style={{ width: 450, textAlign: 'center', marginTop: 20 }}>
                 <Text preset="description">
                     In a real application we'd listen via webhook for transactions
                     settling after 3-4 days, then send the transfer automatically on the
@@ -33,7 +35,7 @@ export const ViewTransfers = () => {
                     drivers+guilds.
                 </Text>
 
-                <Button onClick={() => setPane('intro')}>Example driver transfer</Button>
+                <Button onClick={demoTransferDriver}>Example driver transfer</Button>
                 <Text preset="description">
                     Remember that $20 ride payment?{' '}
                     <span role="img" aria-label="Up arrow">

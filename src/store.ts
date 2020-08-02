@@ -37,6 +37,16 @@ export const [useStore] = create((set, get) => ({
                 get().actions.fetchInitialData()
             }, 1000)
         },
+        async demoTransferDriver() {
+            console.log('demoTransferDriver')
+            const driverWallet = await get().circle.createWallet()
+            console.log('driverWallet:', driverWallet)
+            const transfer = await get().circle.demoTransferDriver(driverWallet.walletId)
+            console.log('transfer:', transfer)
+            setTimeout(() => {
+                get().actions.fetchInitialData()
+            }, 1000)
+        },
         setRider() {
             set({ class: 'rider', pane: 'rider' })
         },
@@ -56,11 +66,17 @@ export const [useStore] = create((set, get) => ({
                 return 'Main Wallet'
             } else {
                 console.log(get().guilds)
-                const guild = get().guilds.filter(
+                const guilds = get().guilds.filter(
                     (guild: any) => guild.walletId === walletId,
                 )
-                console.log('found guild', guild)
-                return guild.description
+                if (guilds.length === 1) {
+                    console.log('found guild', guilds[0])
+                    return guilds[0].description
+                } else if (guilds.length === 0) {
+                    return 'Demo Driver Wallet'
+                } else {
+                    return 'Unknown wallet'
+                }
             }
         },
         async submitCreateGuild(values: any) {

@@ -1,6 +1,6 @@
 import cardsApi, { CreateCardPayload } from './lib/cardsApi'
 import paymentsApi, { CreatePaymentPayload } from './lib/paymentsApi'
-import transfersApi from './lib/transfersApi'
+import transfersApi, { CreateTransferPayload } from './lib/transfersApi'
 import walletsApi from './lib/walletsApi'
 import openpgp from './lib/openpgp'
 import { v4 as uuidv4 } from 'uuid'
@@ -9,12 +9,79 @@ import { v4 as uuidv4 } from 'uuid'
 export class Circle {
     apiKey: string
     sessionId: string
+    masterWalletId: string
 
     constructor() {
         this.apiKey =
             'QVBJX0tFWTo2YjZmM2E5MTE2NGM3ZDgwNzgzMzA2YmUxNzJiOTlkNjozYjIzZmNjNzM4ZmQ3YzU5NDZmN2QzM2RhNGUyZmM0Zg=='
+        this.masterWalletId = ''
         this.sessionId = uuidv4()
         this.configureAxios()
+    }
+
+    async demoTransferDriver() {
+        // Usually we'd get these from the payment; for now can hardcode
+        const paymentAmount = '20.00'
+        const feeAmount = '1.15'
+
+        const amt = parseFloat(paymentAmount)
+        const fee = parseFloat(feeAmount)
+        console.log('amt:', amt)
+
+        // Subtract fee
+        const amtMinusFee = amt - fee
+        console.log('Amount minus fee:', amtMinusFee)
+
+        // Send 10% to the guild.
+        const sendToGuild = Math.floor(amtMinusFee * 0.1 * 100) / 100
+
+        // Send 80% to the driver.
+        const sendToDriver = Math.floor(amtMinusFee * 0.8 * 100) / 100
+
+        console.log('sendToGuild: $', sendToGuild)
+        console.log('sendToDriver: $', sendToDriver)
+
+        // Transfer to guild
+        const guildTransferPayload: CreateTransferPayload = {
+            idempotencyKey: uuidv4(),
+            source: {
+                type: 'wallet',
+                id: this.masterWalletId,
+            },
+            destination: {
+                type: 'wallet',
+                id: '1000025375',
+            },
+            amount: {
+                amount: sendToGuild.toString(),
+                currency: 'USD',
+            },
+        }
+        // const guildTransfer = await transfersApi.createTransfer(guildTransferPayload)
+        // console.log('guildTransfer:', guildTransfer)
+
+        // Transfer to driver
+        const driverTransferPayload: CreateTransferPayload = {
+            idempotencyKey: uuidv4(),
+            source: {
+                type: 'wallet',
+                id: this.masterWalletId,
+            },
+            destination: {
+                type: 'wallet',
+                id: '1000025371',
+            },
+            amount: {
+                amount: sendToDriver.toString(),
+                currency: 'USD',
+            },
+        }
+
+        const driverTransfer = await transfersApi.createTransfer(driverTransferPayload)
+        console.log('driverTransfer:', driverTransfer)
+        return {
+            driverTransfer,
+        }
     }
 
     async fetchInitialData() {
@@ -23,6 +90,7 @@ export class Circle {
         const masterWalletId = await this.fetchMasterWalletId()
         const transfers = await this.fetchTransfers()
         const wallets: any = await this.fetchWallets()
+        this.masterWalletId = masterWalletId
 
         // Filter out my earliest test wallets
         const filteredWallets = wallets.filter(
