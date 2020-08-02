@@ -23,9 +23,16 @@ export const Rider = () => {
             <>
                 <Text preset="title">Success!</Text>
                 <Text preset="descriptionSlim">{`Payment ID: ${payment.id}`}</Text>
-                <Text preset="description">
+                <Text preset="descriptionSlim">
                     Refresh the page to see the updated (unsettled) balance.
                 </Text>
+                <Text preset="description">
+                    Or go back to the beginning and use this same card to join a driver
+                    guild.
+                </Text>
+                <Button secondary onClick={() => setPane('intro')}>
+                    Back to beginning
+                </Button>
             </>
         )
     }
@@ -36,6 +43,9 @@ export const Rider = () => {
                 <Text preset="description">Card ending in {card.last4} connected!</Text>
                 <Button onClick={demoPayDriver} disabled={paying}>
                     {paying ? 'Paying...' : 'Pay driver $20'}
+                </Button>
+                <Button secondary onClick={() => setPane('intro')}>
+                    Back to beginning
                 </Button>
             </>
         )
