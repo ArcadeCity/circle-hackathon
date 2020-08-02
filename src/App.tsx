@@ -1,7 +1,15 @@
 import React from 'react'
 import { Box } from 'grommet'
 import { Infobox, Screen, styles } from './components'
-import { CreateGuild, Driver, GuildCreated, Intro, JoinGuild, Rider } from './panes'
+import {
+    CreateGuild,
+    Driver,
+    GuildCreated,
+    Intro,
+    JoinGuild,
+    Rider,
+    ViewGuilds,
+} from './panes'
 import { useStore } from './store'
 import { State } from 'zustand'
 
@@ -23,6 +31,7 @@ function App() {
                 {pane === 'joinGuild' && <JoinGuild />}
                 {pane === 'createGuild' && <CreateGuild />}
                 {pane === 'guildCreated' && <GuildCreated />}
+                {pane === 'viewGuilds' && <ViewGuilds />}
             </Box>
         </Screen>
     )

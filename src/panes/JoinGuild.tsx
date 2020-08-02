@@ -16,9 +16,14 @@ export const JoinGuild = () => {
                 onClick={() =>
                     alert('Code not found! (Because this is not yet implemented!)')
                 }
+                style={{ marginBottom: 25 }}
             >
                 Join Guild
             </Button>
+            <Text preset="description">
+                Or view a list of guilds accepting new members:
+            </Text>
+            <Button onClick={() => setPane('viewGuilds')}>View Guilds</Button>
             <Button secondary onClick={() => setPane('driver')}>
                 Back
             </Button>

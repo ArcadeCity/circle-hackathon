@@ -8,11 +8,12 @@ export const GuildCreated = () => {
     return (
         <>
             <Text preset="title">Guild created!</Text>
-            <Text preset="description">Congrats - you can start recruiting!</Text>
+            <Text preset="descriptionSlim">Congrats - you can start recruiting!</Text>
             <Text preset="description">Invite code: NOTAREALCODE</Text>
 
+            <Button onClick={() => setPane('viewGuilds')}>View Guilds</Button>
             <Button secondary onClick={() => setPane('intro')}>
-                Done!
+                Back to the beginning
             </Button>
         </>
     )
