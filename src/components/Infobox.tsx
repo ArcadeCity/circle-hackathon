@@ -8,6 +8,7 @@ export function Infobox() {
     const balance = useStore((state: State) => state.balance)
     const card = useStore((state: State) => state.card)
     const guild = useStore((state: State) => state.guild)
+    const guilds = useStore((state: State) => state.guilds)
     const masterWalletId = useStore((state: State) => state.masterWalletId)
     const payment = useStore((state: State) => state.payment)
     const { fetchInitialData, formatBalance } = useStore((state: State) => state.actions)
@@ -72,7 +73,7 @@ export function Infobox() {
                     </span>
                 </p>
                 <p style={styles.info}>
-                    Guild created?:{' '}
+                    You created a guild?:{' '}
                     <span style={styles.highlight}>
                         {guild && guild === 'creating'
                             ? 'Creating...'
@@ -80,6 +81,10 @@ export function Infobox() {
                             ? `Yes - ${guild.name} ($${guild.dues}/mo)`
                             : 'No'}
                     </span>
+                </p>
+                <p style={styles.info}>
+                    # Guilds created:{' '}
+                    <span style={styles.highlight}>{guilds && guilds.length}</span>
                 </p>
             </Box>
         </div>

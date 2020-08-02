@@ -16,6 +16,33 @@ export class Circle {
         this.configureAxios()
     }
 
+    async fetchInitialData() {
+        const balance = await this.fetchBalance()
+        const masterWalletId = await this.fetchMasterWalletId()
+        const wallets: any = await this.fetchWallets()
+        const guilds: any[] = []
+        wallets.forEach((wallet: any) => {
+            try {
+                wallet.name = wallet.description.split(' Guild Wallet')[0]
+                guilds.push(wallet)
+            } catch (e) {
+                // console.log('skipping ', wallet)
+            }
+            console.log(wallet)
+        })
+        return {
+            balance,
+            masterWalletId,
+            guilds,
+        }
+    }
+
+    async fetchWallets() {
+        const wallets = await walletsApi.getWallets()
+        console.log('All wallets:', wallets)
+        return wallets
+    }
+
     async createWallet(name: string) {
         const wallet = await walletsApi.createWallet(uuidv4(), name)
         return wallet
@@ -110,15 +137,6 @@ export class Circle {
 
         const card = await cardsApi.createCard(cardPayload)
         return card
-    }
-
-    async fetchInitialData() {
-        const balance = await this.fetchBalance()
-        const masterWalletId = await this.fetchMasterWalletId()
-        return {
-            balance,
-            masterWalletId,
-        }
     }
 
     async fetchMasterWalletId() {

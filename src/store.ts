@@ -8,12 +8,17 @@ export const [useStore] = create((set, get) => ({
     balance: null,
     card: null,
     guild: null,
+    guilds: [],
     masterWalletId: null,
     payment: null,
     actions: {
         async fetchInitialData() {
-            const { balance, masterWalletId } = await get().circle.fetchInitialData()
-            set({ balance, masterWalletId })
+            const {
+                balance,
+                guilds,
+                masterWalletId,
+            } = await get().circle.fetchInitialData()
+            set({ balance, guilds, masterWalletId })
         },
         async addDemoCard() {
             set({ card: 'connecting' })
@@ -41,7 +46,6 @@ export const [useStore] = create((set, get) => ({
             return get().circle.formatBalance(balance, type)
         },
         async submitCreateGuild(values: any) {
-            set({ guild: 'creating' })
             console.log('submitCreateGuild with:', values)
             let dues, guildname
             try {
@@ -60,10 +64,10 @@ export const [useStore] = create((set, get) => ({
                 alert(
                     'Dues error: Please enter a number. Enter 0 if you do not want to collect dues.',
                 )
+                return false
             }
             try {
                 dues = parseFloat(values.dues)
-                console.log(dues)
             } catch (e) {
                 console.log(e)
                 alert(
@@ -71,7 +75,7 @@ export const [useStore] = create((set, get) => ({
                 )
                 return false
             }
-
+            set({ guild: 'creating' })
             // Create guild wallet
             const wallet = await get().circle.createWallet(
                 `${guildname} Guild Wallet [[${dues}]]`,
