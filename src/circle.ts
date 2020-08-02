@@ -53,8 +53,11 @@ export class Circle {
             keyId,
         }
 
-        const riderPayment = await paymentsApi.createPayment(createPaymentPayload)
-        console.log('riderPayment', riderPayment)
+        const riderPayment: any = await paymentsApi.createPayment(createPaymentPayload)
+        // console.log('riderPayment', riderPayment)
+        alert(
+            `Payment succeeded with ID ${riderPayment.id}. Refresh the page to see updated 'unsettled' balance.`,
+        )
 
         return riderPayment
     }
