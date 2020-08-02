@@ -14,6 +14,7 @@ export const Text = styled('p')<any>`
         props.preset === 'description' &&
         css`
             color: #9d98cb;
+            line-height: 1.4;
             margin: 14px 0 22px;
         `}
     ${(props) =>

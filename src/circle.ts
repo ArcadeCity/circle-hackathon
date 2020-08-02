@@ -26,7 +26,7 @@ export class Circle {
 
         // Filter out my earliest test wallets
         const filteredWallets = wallets.filter(
-            (wallet: any) => parseFloat(wallet.walletId) > 1000026300,
+            (wallet: any) => parseFloat(wallet.walletId) > 1000026388,
         )
 
         // Build guild objects from wallet info via ugly hack
@@ -47,6 +47,7 @@ export class Circle {
                 // console.log('skipping ', wallet)
             }
         })
+        console.log('guilds:', guilds)
         return {
             balance,
             masterWalletId,
