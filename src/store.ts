@@ -11,6 +11,7 @@ export const [useStore] = create((set, get) => ({
     guilds: [],
     masterWalletId: null,
     payment: null,
+    transfers: [],
     actions: {
         async fetchInitialData() {
             console.log('Fetching API data...')
@@ -18,8 +19,9 @@ export const [useStore] = create((set, get) => ({
                 balance,
                 guilds,
                 masterWalletId,
+                transfers,
             } = await get().circle.fetchInitialData()
-            set({ balance, guilds, masterWalletId })
+            set({ balance, guilds, masterWalletId, transfers })
         },
         async addDemoCard() {
             set({ card: 'connecting' })
@@ -48,6 +50,18 @@ export const [useStore] = create((set, get) => ({
             // TODO: Move this to a util file that can be exported/imported w/o
             // pulling in Circle service or going through store
             return get().circle.formatBalance(balance, type)
+        },
+        formatWalletId(walletId: string) {
+            if (walletId === get().masterWalletId) {
+                return 'Main Wallet'
+            } else {
+                console.log(get().guilds)
+                const guild = get().guilds.filter(
+                    (guild: any) => guild.walletId === walletId,
+                )
+                console.log('found guild', guild)
+                return guild.description
+            }
         },
         async submitCreateGuild(values: any) {
             console.log('submitCreateGuild with:', values)

@@ -11,6 +11,7 @@ export function Infobox() {
     const guilds = useStore((state: State) => state.guilds)
     const masterWalletId = useStore((state: State) => state.masterWalletId)
     const payment = useStore((state: State) => state.payment)
+    const transfers = useStore((state: State) => state.transfers)
     const { fetchInitialData, formatBalance } = useStore((state: State) => state.actions)
 
     useEffect(() => {
@@ -85,6 +86,10 @@ export function Infobox() {
                 <p style={styles.info}>
                     # Guilds created:{' '}
                     <span style={styles.highlight}>{guilds && guilds.length}</span>
+                </p>
+                <p style={styles.info}>
+                    # Transfers sent:{' '}
+                    <span style={styles.highlight}>{transfers && transfers.length}</span>
                 </p>
             </Box>
         </div>

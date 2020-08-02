@@ -9,8 +9,16 @@ export const ViewGuilds = () => {
     return (
         <>
             <Text preset="title">View Guilds</Text>
-            <Text preset="description">See a list of guilds accepting new members.</Text>
-
+            <Text preset="descriptionSlim">
+                See a list of guilds accepting new members.
+            </Text>
+            <Button
+                secondary
+                onClick={() => setPane('intro')}
+                style={{ marginBottom: 15 }}
+            >
+                Back
+            </Button>
             {guilds.map((guild: any) => {
                 return (
                     <p key={guild.walletId} style={styles.guildList}>
@@ -22,10 +30,6 @@ export const ViewGuilds = () => {
                     </p>
                 )
             })}
-
-            <Button secondary onClick={() => setPane('driver')}>
-                Back
-            </Button>
         </>
     )
 }

@@ -1,5 +1,6 @@
 import cardsApi, { CreateCardPayload } from './lib/cardsApi'
 import paymentsApi, { CreatePaymentPayload } from './lib/paymentsApi'
+import transfersApi from './lib/transfersApi'
 import walletsApi from './lib/walletsApi'
 import openpgp from './lib/openpgp'
 import { v4 as uuidv4 } from 'uuid'
@@ -18,10 +19,18 @@ export class Circle {
 
     async fetchInitialData() {
         const balance = await this.fetchBalance()
-        const masterWalletId = await this.fetchMasterWalletId()
-        const wallets: any = await this.fetchWallets()
         const guilds: any[] = []
-        wallets.forEach((wallet: any) => {
+        const masterWalletId = await this.fetchMasterWalletId()
+        const transfers = await this.fetchTransfers()
+        const wallets: any = await this.fetchWallets()
+
+        // Filter out my earliest test wallets
+        const filteredWallets = wallets.filter(
+            (wallet: any) => parseFloat(wallet.walletId) > 1000026300,
+        )
+
+        // Build guild objects from wallet info via ugly hack
+        filteredWallets.forEach((wallet: any) => {
             try {
                 wallet.name = wallet.description.split(' Guild Wallet')[0]
                 if (wallet.description.indexOf('[[') !== -1) {
@@ -42,7 +51,19 @@ export class Circle {
             balance,
             masterWalletId,
             guilds,
+            transfers,
         }
+    }
+
+    async fetchTransfers() {
+        const transfers: any = await transfersApi.getTransfers()
+        // Filter out my earliest test transfers
+        const filteredTransfers = transfers.filter(
+            (transfer: any) =>
+                Date.parse(transfer.createDate) > Date.parse('2020-08-01T00:00:00.398Z'),
+        )
+
+        return filteredTransfers
     }
 
     async fetchWallets() {
@@ -179,9 +200,11 @@ export class Circle {
         }
         const cardsInstance = cardsApi.getInstance()
         const paymentsInstance = paymentsApi.getInstance()
+        const transfersInstance = transfersApi.getInstance()
         const walletsInstance = walletsApi.getInstance()
         cardsInstance.interceptors.request.use(circleAuthInterceptor)
         paymentsInstance.interceptors.request.use(circleAuthInterceptor)
+        transfersInstance.interceptors.request.use(circleAuthInterceptor)
         walletsInstance.interceptors.request.use(circleAuthInterceptor)
     }
 }

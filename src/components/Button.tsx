@@ -16,7 +16,6 @@ export const Button = styled('button')<any>`
         props.secondary &&
         css`
             color: #5b20f2;
-            margin: 14px 0 22px;
             background: #eeecfb;
             shadow-color: 'rgba(120, 101, 182, 0.12)';
         `}

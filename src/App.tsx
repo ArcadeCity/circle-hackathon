@@ -9,6 +9,7 @@ import {
     JoinGuild,
     Rider,
     ViewGuilds,
+    ViewTransfers,
 } from './panes'
 import { useStore } from './store'
 import { State } from 'zustand'
@@ -32,6 +33,7 @@ function App() {
                 {pane === 'createGuild' && <CreateGuild />}
                 {pane === 'guildCreated' && <GuildCreated />}
                 {pane === 'viewGuilds' && <ViewGuilds />}
+                {pane === 'viewTransfers' && <ViewTransfers />}
             </Box>
         </Screen>
     )

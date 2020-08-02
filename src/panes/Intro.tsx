@@ -4,7 +4,7 @@ import { useStore } from '../store'
 import { State } from 'zustand'
 
 export const Intro = () => {
-    const { setDriver, setRider } = useStore((state: State) => state.actions)
+    const { setDriver, setPane, setRider } = useStore((state: State) => state.actions)
     return (
         <>
             <img src="/logo.png" style={styles.logo} alt="Arcade City logo" />
@@ -14,6 +14,14 @@ export const Intro = () => {
 
             <Button onClick={setRider}>Rider</Button>
             <Button onClick={setDriver}>Driver</Button>
+
+            <Text preset="description">or</Text>
+            <Button secondary onClick={() => setPane('viewGuilds')}>
+                View Guilds
+            </Button>
+            <Button secondary onClick={() => setPane('viewTransfers')}>
+                View Transfers
+            </Button>
         </>
     )
 }

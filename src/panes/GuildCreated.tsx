@@ -21,6 +21,7 @@ export const GuildCreated = () => {
                 </a>
             </Text>
             <Button onClick={() => setPane('viewGuilds')}>View Guilds</Button>
+            <Button onClick={() => setPane('viewTransfers')}>View Transfers</Button>
             <Button secondary onClick={() => setPane('intro')}>
                 Back to the beginning
             </Button>
