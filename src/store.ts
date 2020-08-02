@@ -39,5 +39,40 @@ export const [useStore] = create((set, get) => ({
             // pulling in Circle service or going through store
             return get().circle.formatBalance(balance, type)
         },
+        async submitCreateGuild(values: any) {
+            console.log('submitCreateGuild with:', values)
+            let dues, guildname
+            try {
+                guildname = values.guildname
+            } catch (e) {
+                console.log(e)
+                alert('Guild name error: Please name your guild!')
+                return false
+            }
+            if (!guildname) {
+                alert('Guild name error: Please name your guild!')
+                return false
+            }
+            dues = Number(values.dues)
+            if ((dues !== 0 && !dues) || (!Number.isInteger(dues) && !isFloat(dues))) {
+                alert(
+                    'Dues error: Please enter a number. Enter 0 if you do not want to collect dues.',
+                )
+            }
+            try {
+                dues = parseFloat(values.dues)
+                console.log(dues)
+            } catch (e) {
+                console.log(e)
+                alert(
+                    'Dues error: Please enter a number. Enter 0 if you do not want to collect dues.',
+                )
+                return false
+            }
+        },
     },
 }))
+
+function isFloat(n: any) {
+    return n === +n && n !== (n | 0)
+}
