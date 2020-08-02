@@ -16,11 +16,24 @@ export const Rider = () => {
     // State for paying driver
     const payment = useStore((state: State) => state.payment)
     const paying = payment && payment === 'paying'
+    const paid = payment && payment.id
 
+    if (paid) {
+        return (
+            <>
+                <Text preset="title">Success!</Text>
+                <Text preset="descriptionSlim">{`Payment ID: ${payment.id}`}</Text>
+                <Text preset="description">
+                    Refresh the page to see the updated (unsettled) balance.
+                </Text>
+            </>
+        )
+    }
     if (cardConnected) {
         return (
             <>
                 <Text preset="title">Pay driver for service</Text>
+                <Text preset="description">Card ending in {card.last4} connected!</Text>
                 <Button onClick={demoPayDriver} disabled={paying}>
                     {paying ? 'Paying...' : 'Pay driver $20'}
                 </Button>
