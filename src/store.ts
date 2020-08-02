@@ -90,6 +90,10 @@ export const [useStore] = create((set, get) => ({
                 pane: 'guildCreated',
             })
 
+            setTimeout(() => {
+                console.log('Refreshing data...')
+                get().actions.fetchInitialData()
+            }, 1000)
             console.log(`Created guild wallet with ID ${walletId}:`, wallet)
         },
     },

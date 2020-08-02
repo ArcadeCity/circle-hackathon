@@ -24,11 +24,19 @@ export class Circle {
         wallets.forEach((wallet: any) => {
             try {
                 wallet.name = wallet.description.split(' Guild Wallet')[0]
-                guilds.push(wallet)
+                if (wallet.description.indexOf('[[') !== -1) {
+                    // Ugly hack; storing dues in Circle wallet desc, should use
+                    // regex but more importantly should set this idea entirely
+                    // on fire by persisting this info to a database. Got to put
+                    // the 'hack' in hackathon eh?
+                    const duesNext = wallet.description.split('[[')[1]
+                    const duesNow = duesNext.split(']]')[0]
+                    wallet.dues = duesNow
+                    guilds.push(wallet)
+                }
             } catch (e) {
                 // console.log('skipping ', wallet)
             }
-            console.log(wallet)
         })
         return {
             balance,
@@ -39,7 +47,6 @@ export class Circle {
 
     async fetchWallets() {
         const wallets = await walletsApi.getWallets()
-        console.log('All wallets:', wallets)
         return wallets
     }
 

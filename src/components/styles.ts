@@ -8,9 +8,13 @@ export const styles: any = {
         color: '#F459F4',
         fontWeight: 700,
     },
+    bold: {
+        fontWeight: 700,
+    },
     link: {
         color: '#AE30FF',
         fontWeight: 700,
+        cursor: 'pointer',
     },
     info: { margin: '6px 0' },
     circleTitle: {
@@ -21,5 +25,10 @@ export const styles: any = {
     },
     container: {
         marginTop: -30,
+    },
+    guildList: {
+        fontSize: 14,
+        lineHeight: 1.5,
+        margin: 0,
     },
 }
